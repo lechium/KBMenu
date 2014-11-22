@@ -11,10 +11,10 @@
 		89B5394D1A200B0A0072F1B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 89B5394C1A200B0A0072F1B2 /* Images.xcassets */; };
 		89B539501A200B0A0072F1B2 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B5394E1A200B0A0072F1B2 /* MainMenu.xib */; };
 		89B5395C1A200B0B0072F1B2 /* KBMenuTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B5395B1A200B0B0072F1B2 /* KBMenuTests.swift */; };
-		89B5396E1A21384A0072F1B2 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B5396A1A21384A0072F1B2 /* SCEvent.m */; };
-		89B5396F1A21384A0072F1B2 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B5396D1A21384A0072F1B2 /* SCEvents.m */; };
 		89B539711A213A2A0072F1B2 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B539701A213A2A0072F1B2 /* main.swift */; };
 		89B539731A213A550072F1B2 /* network.png in Resources */ = {isa = PBXBuildFile; fileRef = 89B539721A213A550072F1B2 /* network.png */; };
+		89B5397B1A213D990072F1B2 /* SCEvent.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B539771A213D990072F1B2 /* SCEvent.m */; };
+		89B5397C1A213D990072F1B2 /* SCEvents.m in Sources */ = {isa = PBXBuildFile; fileRef = 89B5397A1A213D990072F1B2 /* SCEvents.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -37,14 +37,14 @@
 		89B5395A1A200B0B0072F1B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		89B5395B1A200B0B0072F1B2 /* KBMenuTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KBMenuTests.swift; sourceTree = "<group>"; };
 		89B539661A21378C0072F1B2 /* KBMenu-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KBMenu-Bridging-Header.h"; sourceTree = "<group>"; };
-		89B539681A21384A0072F1B2 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
-		89B539691A21384A0072F1B2 /* SCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvent.h; sourceTree = "<group>"; };
-		89B5396A1A21384A0072F1B2 /* SCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvent.m; sourceTree = "<group>"; };
-		89B5396B1A21384A0072F1B2 /* SCEventListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventListenerProtocol.h; sourceTree = "<group>"; };
-		89B5396C1A21384A0072F1B2 /* SCEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.h; sourceTree = "<group>"; };
-		89B5396D1A21384A0072F1B2 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 		89B539701A213A2A0072F1B2 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		89B539721A213A550072F1B2 /* network.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = network.png; sourceTree = "<group>"; };
+		89B539751A213D990072F1B2 /* SCConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCConstants.h; sourceTree = "<group>"; };
+		89B539761A213D990072F1B2 /* SCEvent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvent.h; sourceTree = "<group>"; };
+		89B539771A213D990072F1B2 /* SCEvent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvent.m; sourceTree = "<group>"; };
+		89B539781A213D990072F1B2 /* SCEventListenerProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEventListenerProtocol.h; sourceTree = "<group>"; };
+		89B539791A213D990072F1B2 /* SCEvents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SCEvents.h; sourceTree = "<group>"; };
+		89B5397A1A213D990072F1B2 /* SCEvents.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SCEvents.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -86,7 +86,7 @@
 		89B539471A200B0A0072F1B2 /* KBMenu */ = {
 			isa = PBXGroup;
 			children = (
-				89B539671A21384A0072F1B2 /* SCEvent */,
+				89B539741A213D990072F1B2 /* SCEvent */,
 				89B5394A1A200B0A0072F1B2 /* AppDelegate.swift */,
 				89B5394C1A200B0A0072F1B2 /* Images.xcassets */,
 				89B5394E1A200B0A0072F1B2 /* MainMenu.xib */,
@@ -123,18 +123,17 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
-		89B539671A21384A0072F1B2 /* SCEvent */ = {
+		89B539741A213D990072F1B2 /* SCEvent */ = {
 			isa = PBXGroup;
 			children = (
-				89B539681A21384A0072F1B2 /* SCConstants.h */,
-				89B539691A21384A0072F1B2 /* SCEvent.h */,
-				89B5396A1A21384A0072F1B2 /* SCEvent.m */,
-				89B5396B1A21384A0072F1B2 /* SCEventListenerProtocol.h */,
-				89B5396C1A21384A0072F1B2 /* SCEvents.h */,
-				89B5396D1A21384A0072F1B2 /* SCEvents.m */,
+				89B539751A213D990072F1B2 /* SCConstants.h */,
+				89B539761A213D990072F1B2 /* SCEvent.h */,
+				89B539771A213D990072F1B2 /* SCEvent.m */,
+				89B539781A213D990072F1B2 /* SCEventListenerProtocol.h */,
+				89B539791A213D990072F1B2 /* SCEvents.h */,
+				89B5397A1A213D990072F1B2 /* SCEvents.m */,
 			);
-			name = SCEvent;
-			path = ../../../Projects/Work/NEW_SCIANCE/GMMenuSwift/KBMenu/SCEvent;
+			path = SCEvent;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -237,9 +236,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				89B5396F1A21384A0072F1B2 /* SCEvents.m in Sources */,
-				89B5396E1A21384A0072F1B2 /* SCEvent.m in Sources */,
+				89B5397C1A213D990072F1B2 /* SCEvents.m in Sources */,
 				89B539711A213A2A0072F1B2 /* main.swift in Sources */,
+				89B5397B1A213D990072F1B2 /* SCEvent.m in Sources */,
 				89B5394B1A200B0A0072F1B2 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -430,6 +429,7 @@
 				89B539611A200B0B0072F1B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		89B539621A200B0B0072F1B2 /* Build configuration list for PBXNativeTarget "KBMenuTests" */ = {
 			isa = XCConfigurationList;
@@ -438,6 +438,7 @@
 				89B539641A200B0B0072F1B2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
