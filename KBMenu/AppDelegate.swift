@@ -182,7 +182,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     func applicationSupportFolder() -> String
     {
         var documentsPaths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)[0] as String
-        documentsPaths = documentsPaths + "/GMMenu" //just playing around with diff string concat paradigm. this could obviously still be done with stringByAppendingPathComponent
+        documentsPaths = documentsPaths + "/KBMenu" //just playing around with diff string concat paradigm. this could obviously still be done with stringByAppendingPathComponent
         var man = NSFileManager.defaultManager()
         if man.fileExistsAtPath(documentsPaths) == false
         {
