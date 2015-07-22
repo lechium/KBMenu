@@ -70,7 +70,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     func openLocation(sender : AnyObject) {
         
         var tag: Int = sender.tag()
-        var menuItem = self.menuBackingStore()[tag] as String
+        var menuItem = self.menuBackingStore()[tag] as! String
         var fileItem = applicationSupportFolder().stringByAppendingPathComponent(menuItem)
         NSWorkspace.sharedWorkspace().openFile(fileItem)
         
@@ -108,12 +108,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         var tag = 0
         for menuItem : AnyObject in menuArray
         {
-            if menuItem as String != ".DS_Store"
+            if menuItem as! String != ".DS_Store"
             {
                 var newMenuItem = NSMenuItem(title:  menuItem.stringByDeletingPathExtension, action: Selector("openLocation:"), keyEquivalent:"")
                 newMenuItem.target = self
                 newMenuItem.tag = tag
-                var fileItem = applicationSupportFolder().stringByAppendingPathComponent(menuItem as String)
+                var fileItem = applicationSupportFolder().stringByAppendingPathComponent(menuItem as! String)
                 var newImage = imageForFile(fileItem)
                 newMenuItem.image = newImage;
                 menu.addItem(newMenuItem)
@@ -181,7 +181,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     
     func applicationSupportFolder() -> String
     {
-        var documentsPaths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)[0] as String
+        var documentsPaths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)[0] as! String
         documentsPaths = documentsPaths + "/KBMenu" //just playing around with diff string concat paradigm. this could obviously still be done with stringByAppendingPathComponent
         var man = NSFileManager.defaultManager()
         if man.fileExistsAtPath(documentsPaths) == false
@@ -192,7 +192,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         return documentsPaths
     }
     
-    func applicationDidFinishLaunching(aNotification: NSNotification?) {
+    func applicationDidFinishLaunching(aNotification: NSNotification) {
         
         // Insert code here to initialize your application
         
@@ -210,9 +210,11 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         */
     }
     
-    func applicationWillTerminate(aNotification: NSNotification?) {
-        // Insert code here to tear down your application
+    func applicationWillTerminate(notification: NSNotification) {
+        
+        
     }
+    
     
     
 }

@@ -9,4 +9,4 @@
 import Cocoa
 
 
-NSApplicationMain(C_ARGC, C_ARGV)
+NSApplicationMain(Process.argc, Process.unsafeArgv)
