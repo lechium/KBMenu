@@ -27,15 +27,15 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     @IBOutlet var window: NSWindow!
     @IBOutlet var nameField: NSTextField!
     @IBOutlet var locationField: NSTextField!
-    var statusItem = NSStatusBar.systemStatusBar().statusItemWithLength(30)
+    var statusItem = NSStatusBar.system().statusItem(withLength: 30)
     var events: SCEvents = SCEvents()
     //just add @IBAction prefix to get IB to recognize and make connections
-    @IBAction func cancel(sender : AnyObject){
+    @IBAction func cancel(_ sender : AnyObject){
         
         window.close()
     }
     
-    @IBAction func ok(sender : AnyObject){
+    @IBAction func ok(_ sender : AnyObject){
         
         addBookmark()
         window.close()
@@ -47,37 +47,37 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         statusItem.highlightMode = true
         // installMenuItems()
         createMenuItems()
-        NSApp.activateIgnoringOtherApps(true)
+        NSApp.activate(ignoringOtherApps: true)
         setupEventListener()
     }
     
     func setupEventListener() {
         
         events._delegate = self
-        var paths = [applicationSupportFolder()]
+        let paths = [applicationSupportFolder()]
         events.startWatchingPaths(paths)
     }
     
     //the bridging between obj-c and swift is brilliant, autocomplete will change the
     //function name to be the swift variant based on subscribing to the protocol
     
-    func pathWatcher(pathWatcher: SCEvents!, eventOccurred event: SCEvent!)
+    func pathWatcher(_ pathWatcher: SCEvents!, eventOccurred event: SCEvent!)
     {
-        println("event occured!!")
+        print("event occured!!")
         createMenuItems()
     }
     
-    func openLocation(sender : AnyObject) {
+    func openLocation(_ sender : AnyObject) {
         
-        var tag: Int = sender.tag()
-        var menuItem = self.menuBackingStore()[tag] as! String
-        var fileItem = applicationSupportFolder().stringByAppendingPathComponent(menuItem)
-        NSWorkspace.sharedWorkspace().openFile(fileItem)
+        let tag: Int = sender.tag
+        let menuItem = self.menuBackingStore()[tag] as! String
+        let fileItem = (applicationSupportFolder() as NSString).appendingPathComponent(menuItem)
+        NSWorkspace.shared().openFile(fileItem)
         
     }
     
     
-    func imageForFile(file: String) -> NSImage
+    func imageForFile(_ file: String) -> NSImage
     {
         
         /*
@@ -88,47 +88,47 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         take those 'root' values and make them into strings.
         
         */
-        var ws = NSWorkspace.sharedWorkspace()
+        let ws = NSWorkspace.shared()
         var fileImage: NSImage// = ws.iconForFileType(NSFileTypeForHFSTypeCode(kComputerIcon))
-        var pathExtension: String = file.pathExtension
+        let pathExtension: String = (file as NSString).pathExtension
         if pathExtension == "inetloc" {
-            fileImage = ws.iconForFileType("\'root\'")
+            fileImage = ws.icon(forFileType: "\'root\'")
         } else if pathExtension == "afploc" {
-            fileImage = ws.iconForFileType("\'srvr\'")
+            fileImage = ws.icon(forFileType: "\'srvr\'")
         } else {
-            fileImage = ws.iconForFileType("\'srvr\'")
+            fileImage = ws.icon(forFileType: "\'srvr\'")
         }
         return fileImage
     }
     
     func createMenuItems()
     {
-        var menuArray = menuBackingStore()
-        var menu = NSMenu()
+        let menuArray = menuBackingStore()
+        let menu = NSMenu()
         var tag = 0
         for menuItem : AnyObject in menuArray
         {
             if menuItem as! String != ".DS_Store"
             {
-                var newMenuItem = NSMenuItem(title:  menuItem.stringByDeletingPathExtension, action: Selector("openLocation:"), keyEquivalent:"")
+                let newMenuItem = NSMenuItem(title:  menuItem.deletingPathExtension, action: #selector(AppDelegate.openLocation(_:)), keyEquivalent:"")
                 newMenuItem.target = self
                 newMenuItem.tag = tag
-                var fileItem = applicationSupportFolder().stringByAppendingPathComponent(menuItem as! String)
-                var newImage = imageForFile(fileItem)
+                let fileItem = (applicationSupportFolder() as NSString).appendingPathComponent(menuItem as! String)
+                let newImage = imageForFile(fileItem)
                 newMenuItem.image = newImage;
                 menu.addItem(newMenuItem)
             }
-            tag++
+            tag += 1
             
         }
-        menu.addItem(NSMenuItem.separatorItem())
-        var addBm = NSMenuItem(title: "Add Bookmark", action: Selector("showBookmarkWindow"), keyEquivalent: "")
-        var appSupport = NSMenuItem(title: "Show Bookmark Folder", action: Selector("showAppSupport"), keyEquivalent: "")
-        var quit = NSMenuItem(title: "Quit", action: Selector("quitApp"), keyEquivalent: "")
+        menu.addItem(NSMenuItem.separator())
+        let addBm = NSMenuItem(title: "Add Bookmark", action: #selector(AppDelegate.showBookmarkWindow), keyEquivalent: "")
+        let appSupport = NSMenuItem(title: "Show Bookmark Folder", action: #selector(AppDelegate.showAppSupport), keyEquivalent: "")
+        let quit = NSMenuItem(title: "Quit", action: #selector(AppDelegate.quitApp), keyEquivalent: "")
         menu.addItem(addBm)
         menu.addItem(appSupport)
         menu.addItem(quit)
-        var networkImage = NSImage(named:"network.png")
+        let networkImage = NSImage(named:"network.png")
         statusItem.image = networkImage;
         statusItem.menu = menu
     }
@@ -148,51 +148,54 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     
     func showAppSupport()
     {
-        NSWorkspace.sharedWorkspace().openFile(applicationSupportFolder())
+        NSWorkspace.shared().openFile(applicationSupportFolder())
     }
     
     func menuBackingStore() -> [AnyObject]
     {
-        var items = NSFileManager.defaultManager().contentsOfDirectoryAtPath(applicationSupportFolder(), error: nil)
-        return items!
+        let items = try? FileManager.default.contentsOfDirectory(atPath: applicationSupportFolder())
+        return items! as [AnyObject]
         
     }
     
     
     func addBookmark()
     {
-        var urlValue: String = locationField.stringValue
-        var newDict: NSDictionary = ["URL": locationField.stringValue]
-        var newFile = applicationSupportFolder().stringByAppendingPathComponent(nameField.stringValue)
-        if (urlValue.rangeOfString("afp") != nil) {
-            newFile = newFile.stringByAppendingPathExtension("afploc")!
-        } else if( urlValue.rangeOfString("vnc") != nil) {
-            newFile = newFile.stringByAppendingPathExtension("inetloc")!
-        } else if (urlValue.rangeOfString("smb") != nil) {
-            newFile = newFile.stringByAppendingPathExtension("inetloc")!
-        } else if (urlValue.rangeOfString("ftp") != nil) {
-            newFile = newFile.stringByAppendingPathExtension("ftploc")!
+        let urlValue: String = locationField.stringValue
+        let newDict: NSDictionary = ["URL": locationField.stringValue]
+        var newFile = (applicationSupportFolder() as NSString).appendingPathComponent(nameField.stringValue)
+        if (urlValue.range(of: "afp") != nil) {
+            newFile = (newFile as NSString).appendingPathExtension("afploc")!
+        } else if( urlValue.range(of: "vnc") != nil) {
+            newFile = (newFile as NSString).appendingPathExtension("inetloc")!
+        } else if (urlValue.range(of: "smb") != nil) {
+            newFile = (newFile as NSString).appendingPathExtension("inetloc")!
+        } else if (urlValue.range(of: "ftp") != nil) {
+            newFile = (newFile as NSString).appendingPathExtension("ftploc")!
         } else {
-            println("invalid bookmark!!")
+            print("invalid bookmark!!")
         }
-        newDict.writeToFile(newFile, atomically: true)
+        newDict.write(toFile: newFile, atomically: true)
         createMenuItems()
     }
     
     func applicationSupportFolder() -> String
     {
-        var documentsPaths = NSSearchPathForDirectoriesInDomains(.ApplicationSupportDirectory, .UserDomainMask, true)[0] as! String
+        var documentsPaths = NSSearchPathForDirectoriesInDomains(.applicationSupportDirectory, .userDomainMask, true)[0] 
         documentsPaths = documentsPaths + "/KBMenu" //just playing around with diff string concat paradigm. this could obviously still be done with stringByAppendingPathComponent
-        var man = NSFileManager.defaultManager()
-        if man.fileExistsAtPath(documentsPaths) == false
+        let man = FileManager.default
+        if man.fileExists(atPath: documentsPaths) == false
         {
-            man.createDirectoryAtPath(documentsPaths, withIntermediateDirectories: true, attributes: nil, error: nil);
+            do {
+                try man.createDirectory(atPath: documentsPaths, withIntermediateDirectories: true, attributes: nil)
+            } catch _ {
+            };
             //man.createDirectoryAtPath(documentsPaths, attributes: nil)
         }
         return documentsPaths
     }
     
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         
         // Insert code here to initialize your application
         
@@ -210,7 +213,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         */
     }
     
-    func applicationWillTerminate(notification: NSNotification) {
+    func applicationWillTerminate(_ notification: Notification) {
         
         
     }
