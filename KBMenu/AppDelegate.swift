@@ -27,7 +27,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     @IBOutlet var window: NSWindow!
     @IBOutlet var nameField: NSTextField!
     @IBOutlet var locationField: NSTextField!
-    var statusItem = NSStatusBar.system().statusItem(withLength: 30)
+    var statusItem = NSStatusBar.system.statusItem(withLength: 30)
     var events: SCEvents = SCEvents()
     //just add @IBAction prefix to get IB to recognize and make connections
     @IBAction func cancel(_ sender : AnyObject){
@@ -67,12 +67,12 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         createMenuItems()
     }
     
-    func openLocation(_ sender : AnyObject) {
+    @objc func openLocation(_ sender : AnyObject) {
         
         let tag: Int = sender.tag
         let menuItem = self.menuBackingStore()[tag] as! String
         let fileItem = (applicationSupportFolder() as NSString).appendingPathComponent(menuItem)
-        NSWorkspace.shared().openFile(fileItem)
+        NSWorkspace.shared.openFile(fileItem)
         
     }
     
@@ -88,7 +88,7 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         take those 'root' values and make them into strings.
         
         */
-        let ws = NSWorkspace.shared()
+        let ws = NSWorkspace.shared
         var fileImage: NSImage// = ws.iconForFileType(NSFileTypeForHFSTypeCode(kComputerIcon))
         let pathExtension: String = (file as NSString).pathExtension
         if pathExtension == "inetloc" {
@@ -133,22 +133,22 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
         statusItem.menu = menu
     }
     
-    func quitApp()
+    @objc func quitApp()
     {
         exit(0)
     }
     
-    func showBookmarkWindow()
+    @objc func showBookmarkWindow()
     {
         window.makeKeyAndOrderFront(nil)
         //couldnt find equivalent to [window setLevel:NSStatusWindowLevel];
-        window.level = 25
+        window.level = convertToNSWindowLevel(25)
     }
     
     
-    func showAppSupport()
+    @objc func showAppSupport()
     {
-        NSWorkspace.shared().openFile(applicationSupportFolder())
+        NSWorkspace.shared.openFile(applicationSupportFolder())
     }
     
     func menuBackingStore() -> [AnyObject]
@@ -222,3 +222,8 @@ class AppDelegate: NSObject, NSApplicationDelegate, SCEventListenerProtocol {
     
 }
 
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSWindowLevel(_ input: Int) -> NSWindow.Level {
+	return NSWindow.Level(rawValue: input)
+}
